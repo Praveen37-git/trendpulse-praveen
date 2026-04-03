@@ -4,11 +4,13 @@ import numpy as np
 #Load the CSV files into Panda dataframe
 filename = "data/trends_clean.csv"
 df = pd.read_csv(filename)
+
+#print shape of dataframe (rows and columns)
 print("Loaded data: ",df.shape)
+
 #print first 5 rows
 print("First 5 rows: \n",df.head())
-#print shape of dataframe (rows and columns)
-print("The shape of dataframe: ",df.shape)
+
 #print average score and average num_comments
 print("Average Score: ",df["score"].mean())
 print("Average comments: ",df["num_comments"].mean())

@@ -11,7 +11,7 @@ response = requests.get(url,timeout=10,headers = headers)
 #checking the response for the API call
 print("Status code:",response.status_code)
 
-#dictionory to get category wise stories
+#dictionory to get category wise stories based on the keywords
 categories = {"technology":["AI", "software", "tech", "code", "computer", "data", "cloud", "API", "GPU", "LLM"],
               "worldnews": ["war", "government", "country", "president", "election", "climate", "attack", "global"],
               "sports" : ["NFL", "NBA", "FIFA", "sport", "game", "team", "player", "league", "championship"],
@@ -35,6 +35,7 @@ def fetch_data(story_id):
 def get_category(title):
     if title == None:
         return None
+    #convert the title to string and to lower case to check for matches with the keywords
     title = str(title)
     title_lower = title.lower()
     for category_name,keywords in categories.items():
@@ -44,7 +45,6 @@ def get_category(title):
                 return category_name
 
 
-        
 #retrieve the data from API and slice it to fetch the first 500 stories
 data = response.json()
 all_stories = []
