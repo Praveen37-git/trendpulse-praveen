@@ -13,15 +13,16 @@ os.makedirs("outputs", exist_ok= True)
 #Chart 1 - Top 10 Stories by Score 
 #Sorting the dataframe to show the top 10 stories in descending order by score
 sorted_df = df.sort_values(by = 'score', ascending= False)
+#head(10) gives the first 10 stories from the sorted dataframe
 data = sorted_df.head(10)
 title_list = []
 titles = data["title"]
 score = data["score"]
-#Iterate over sortened dataframe to shorten the title and append it to the list
+#Iterate over sortened dataframe to shorten the title if it has more then 50 characters and append it to the list using textwrap
 for index, row in data.iterrows():
     shortened_title = textwrap.shorten(str(row["title"]),width=47,placeholder="...")
     title_list.append(shortened_title)
-#create horizontal bar chart
+#create horizontal bar chart y - titles, x - score
 plt.barh(title_list, score, color = "steelblue")
 plt.title("Chart 1 - Top 10 Stories by Score")
 plt.xlabel("Score")
@@ -36,9 +37,10 @@ plt.close()
 category_counts = df["category"].value_counts()
 #list of colors for the chart
 colors = ['steelblue', 'coral', 'mediumseagreen', 'goldenrod']
-#Get the category names and count of categories
+#Get the category names and count of categories, index to get the category names and values for count of stories in the category
 categories = category_counts.index
 count = category_counts.values
+#create a bar chart, x - categories, y - count of stories 
 plt.bar(categories, count, color=colors)
 plt.title("Chart 2: Stories per Category")
 plt.xlabel("Category")
@@ -55,9 +57,10 @@ is_popular = df["is_popular"]
 #Split rows into popular and non-popular
 popular = df["is_popular"] == True
 not_popular = df["is_popular"] == False
-#Plot using scatter plot
+#Plot using scatter plot by locating popular and non-popular stories using boolean masks that is defined in previous lines
 plt.scatter(df.loc[popular,"score"],df.loc[popular,"num_comments"],color = "green",label = "Popular",alpha=0.7)
 plt.scatter(df.loc[not_popular,"score"],df.loc[not_popular,"num_comments"],color = "green",label = "Not Popular",alpha=0.7)
+#create scatter plot x - Score of popular posts, y - no. of comments in popular post
 plt.title("Chart 3: Score vs Comments")
 plt.xlabel("Score")
 plt.ylabel("Number of Comments")
@@ -67,6 +70,7 @@ plt.show()
 plt.close()
 
 #Dashboard
+#create 1x3 (1 row, 3 columns) subplot layout
 fig, ax = plt.subplots(1, 3, figsize=(15, 5))
 #Draw chart 1 on first axes
 ax1 = ax[0]
