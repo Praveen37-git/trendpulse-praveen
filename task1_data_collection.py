@@ -42,9 +42,11 @@ def get_category(title):
         return None
     #convert the title to string and to lower case to check for matches with the keywords
     title_lower = str(title).lower()
+    #Loop through the categories dictionary and the keywords to find the matching words
     for category_name,keywords in categories.items():
         for keyword in keywords:
             keyword_lower = keyword.lower()
+            #condition to check whether the word is present in the title sequence using "in" keyword and return the category name
             if keyword_lower in title_lower:
                 return category_name
 
@@ -53,9 +55,10 @@ def get_category(title):
 data = response.json()
 top_ids = data[:500]
 all_stories = []
+#create a dictionary for counting the stories for each category 
 category_count = {"technology": 0,"worldnews": 0,"sports" : 0,"science" : 0,"entertainment" : 0}
 
-
+#Loop through the top_ids list and fetch the stories for each ids
 for i in range(len(top_ids)):
     story = fetch_data(top_ids[i])
     if story is None:
@@ -69,9 +72,11 @@ for i in range(len(top_ids)):
     author = story.get("by")
     now = datetime.now()
     collected_at = now.strftime("%Y-%m-%d %H:%M:%S")
-    
+
+    #if there is category skip the current iteration
     if category is None:
         continue
+    #condition to check the count of category is 25 and sleep for 2 seconds if it matches
     if category_count[category] == 25:
         print(f"Finished category {category}, sleeping 2 seconds...")
         time.sleep(2)
