@@ -4,14 +4,16 @@ import pandas as pd
 filename = "data/trends_20260402.json"
 df = pd.read_json(filename)
 
-#print the number of rows loaded
+#print the number of rows loaded shape[0] returns the number of rows
 print(f"Loaded {df.shape[0]} stories from {filename}")
 
 #remove duplicates and missing values
+#keeps the first occurence of unique post_id and remove other duplicates
 df = df.drop_duplicates(subset=['post_id'])
+#drop the rows where any of these columns contain null value
 df_cleaned = df.dropna(subset=['post_id','title','score'])
 
-#print number of rows after removing duplicates and null values
+#print number of rows after removing duplicates and null values len(df) gives the number of rows, we can use df.shape[0] as well
 print("After removing duplicates: ",len(df))
 print("After removing nulls: ",len(df_cleaned))
 
